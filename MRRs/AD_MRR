@@ -1,0 +1,81 @@
+%% By Rui Cheng, HFUT, China (rcheng@hfut.edu.cn) 
+% This code calculate the through adn drop responses of an add-drop
+% microring resonator-based filter
+
+
+clc; % clear the command window
+close all; % close all the figures plotted before
+
+%% for solving the analytic expression of Drop- and Through-port responses of the system
+syms a0 b0 a3 
+M =  sym('M', [2,2]);
+x3 = [0;a3];
+x0 = [a0;b0];
+eqs = M*x3 == x0;
+S = solve(eqs,[a3 b0]);
+dr = simplify(S.a3/a0);
+thr = simplify(S.b0/a0);
+dr_char = char(dr); 
+thr_char = char(thr); 
+
+%% Define the radius of the ring
+radius = 10e-6; % radius of the ring
+l = 2*radius*pi;
+
+%% Define the simulation wavelength range
+wavelength0 = 1.55e-6; % wavelength center
+span = 60e-9; % wavelength span
+nw = 600; % wavelength points
+wavelengths = linspace(wavelength0-span/2, wavelength0+span/2, nw);
+
+%% Define the dispersion charateristic of the waveguide, calculated from Mode
+% mode; (below is for 500*220 nm waveguide)
+neff0 = 2.43; % effective index of the waveguide at the defined wavelength center;
+ng =4.3; % group index
+dw_2_dn = (neff0-ng)/wavelength0; % slope of the neff-versus-wavelengths
+neff_wavelength = @(wavelength) neff0+dw_2_dn*(wavelength-wavelength0);
+neff_wavelength = neff_wavelength (wavelengths);
+figure,plot(wavelengths,neff_wavelength),title('Dispersion curve of the waveguide');
+beltas = 2*pi./(wavelengths./neff0); % propagation constant
+
+%% Define the waveguide loss
+loss_per_cm_dB = 5; % typical loss: 5 dB per cm;
+loss_per_cm = -log10(5/10);
+alpha = -log(loss_per_cm)/0.01; % typical waveguide loss：6 dB/cm;
+
+%% Define kappas and taus of the upper and lower DCs
+k0 = sqrt(0.1);  t0 = sqrt(1-k0^2); % upper DC
+k1 = k0; t1 = t0; % lower DC
+
+% Loop over all the wavelengths, and calculated the DR and THR responses of
+% the MRR
+pls = exp(-(1j*beltas+alpha)*l);
+drs = zeros(1,nw); thrs = drs;
+for i = 1:nw 
+    belta = beltas(i);
+    T23 = fun_TM_DC(k0,t0);
+    pl = pls(i);
+    T12 = [0 pl; pl^-1 0];
+    T10 = fun_TM_DC(k0,t0);
+    M = T10*T12*T23;
+    [drs(i),thrs(i)] = Resolve(M,dr_char,thr_char);
+end
+DR = log10(abs(drs).^2)*10;
+THR = log10(abs(thrs).^2)*10;
+figure,plot(wavelengths*1e9, DR),title('Drop-port response of the MRR');
+figure,plot(wavelengths*1e9, THR),title('Through-port response of the MRR')
+
+%% Function Part
+% function to define the transfer matrix of a DC; TM: transfer matrix;
+function TM_DC = fun_TM_DC(k,t)
+    TM_DC = -1/(1j*k).*[-t 1; -1 t];
+end
+
+% function to define the transfer matrix of a DC; TM: transfer matrix;
+function [dr,thr] = Resolve(M,dr_char,thr_char)
+M1_1 = M(1,1); M1_2 = M(1,2);
+M2_1 = M(2,1); M2_2 = M(2,2);
+eval(['dr=' dr_char ';']);
+eval(['thr=' thr_char ';']);
+end
+
