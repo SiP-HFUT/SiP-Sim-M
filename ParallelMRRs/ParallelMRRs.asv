@@ -1,5 +1,5 @@
 %% By Rui Cheng, HFUT, China (rcheng@hfut.edu.cn)
-% This code calculates drop- and through- port responses of a parallel MRR filter
+% This code calculate drop- and through- port responses of a parallel MRR filter
 
 close all;
 clearvars except-
@@ -85,7 +85,7 @@ for dis =[dis1]
     title(['Drop-port response of the P-MRR; disance between adjacent MRRs: ' num2str(dis*1e6) ' um']),
     hold on,
 end
-
+%figure,plot(lams*1e9, THR),title('Through-port response of the P-MRR')
 
 
 

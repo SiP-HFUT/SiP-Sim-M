@@ -1,6 +1,7 @@
 %% By Rui Cheng, HFUT, China (rcheng@hfut.edu.cn) 
-% This code calculate the through adn drop responses of an add-drop
-% microring resonator-based filter
+
+% This file contains required functions for calculating the spectral response of
+% a parallel MRR system
 
 function funs = funs_MRR
   funs.fun_MRR_AD = @fun_MRR_AD;
@@ -10,8 +11,8 @@ end
 
 
 function M_t = fun_MRR_AD (k0,k1,radius, lams, betas,alpha)
-% Function "fun_MRR_AD" return the matrix, M_t, of a MRR, 
-% where [a3; a0] = M_t [b3; b0], and M_t is 2*2*600 sized matrix;
+% This funtion return the matrix, M_t, of a MRR, 
+% where M_t is defined as [a3; a0] = M_t [b3; b0];
 
 % Calculate taus of the DCs according to the assigned kappss
 t0 = sqrt(1-k0^2); % upper DC
@@ -30,11 +31,6 @@ thr_char = char(thr);
 
 % Define the radius of the ring
 l = 2*radius*pi;
-
-
-
-
-
 
 
 % Loop over all the wavelengths, and calculated the DR and THR responses of
@@ -68,7 +64,7 @@ DR1 = abs(drs1).^2;
 THR1 = abs(thrs1).^2;
 DR1_log = log10(DR1)*10;
 THR1_log = log10(THR1)*10;
-figure(11),plot(lams*1e9, DR1),hold on,%title('Drop-port response of the MRR');
+%figure(11),plot(lams*1e9, DR1),hold on,%title('Drop-port response of the MRR');
 %figure,plot(lams*1e9, THR1),title('Through-port response of the MRR')
 end
 
