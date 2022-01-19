@@ -33,7 +33,7 @@ for i = 1:nw
     T12 = [0 pl; pl^-1 0];
     T10 = fun_TM_DC(k1,t1);
     M(:,:,i) = T10*T12*T23;
-    [drs(i),thrs(i)] = Resolve(M(:,:,i),dr_char,thr_char);
+    [drs(i),thrs(i)] = fun_resolve(M(:,:,i),dr_char,thr_char);
 end
 
 DR = log10(abs(drs).^2)*10;
