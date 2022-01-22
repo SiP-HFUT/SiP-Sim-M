@@ -1,0 +1,14 @@
+device = 'PhCWG_';
+
+select('::model');
+
+N = get('N');
+r_holes = get('r_holes') * 1e6;
+period = get('period') * 1e6;
+w = get('w') * 1e6;
+
+parameters = 'N' + num2str(N) + '_W' + num2str(w) +
+'_' + 'rhole' + num2str(r_holes) + '_' + 'period' + num2str(period);
+file_name = device + parameters + '.fsp';
+save(file_name);
+

@@ -1,0 +1,16 @@
+device = 'kappa_cal_staight2ring_';
+
+select('::model');
+
+w_ring = get('w_ring') * 1e6;
+w_bus = get('w_bus') * 1e6;
+r_ring = get('r_ring') * 1e6;
+gap = get('gap') * 1e6;
+
+
+parameters = 'wring' + num2str(w_ring) + '_' + 'wbus' + num2str(w_bus) + 
+'_' + 'gap' + num2str(gap) + '_' + 'rring' + num2str(r_ring);
+
+file_name = device + parameters + '.fsp';
+save(file_name);
+
