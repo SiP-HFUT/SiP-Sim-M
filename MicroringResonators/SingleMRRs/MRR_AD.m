@@ -41,7 +41,7 @@ beltas = 2*pi./(wavelengths./neff0); % propagation constant
 %% Define the waveguide loss
 loss_per_cm_dB = 5; % typical loss: 5 dB per cm;
 loss_per_cm = -log10(5/10);
-alpha = -log(loss_per_cm)/0.01; % typical waveguide lossï¼š6 dB/cm;
+alpha = -log(loss_per_cm)/0.01; % typical waveguide lossï¼? dB/cm;
 
 %% Define kappas and taus of the upper and lower DCs
 k0 = sqrt(0.1);  t0 = sqrt(1-k0^2); % upper DC

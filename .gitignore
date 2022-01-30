@@ -13,3 +13,17 @@
 *mexmaci32
 *mexw32
 *mexw64
+
+
+*.vsdx
+
+# Word temporary
+~$*.doc*
+
+# PowerPoint temporary
+~$*.ppt*
+
+# Visio autosave temporary files
+*.~vsdx
+
+debug?.m
