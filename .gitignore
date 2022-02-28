@@ -14,7 +14,7 @@
 *mexw32
 *mexw64
 
-
+*.ps
 *.vsdx
 
 # Word temporary

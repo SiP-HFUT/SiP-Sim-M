@@ -17,13 +17,13 @@ loss_per_cm = sqrt(loss_per_cm);
 alpha = log(loss_per_cm)/0.01; 
 % alpha = 0; % lossless;
 
-sim_lam_info = struct('lam_center', 1.5500374e-6, 'lam_span', 1e-9, ...
+sim_lam_info = struct('lam_center', 1.554544e-6, 'lam_span', 3e-9, ...
     'nw', 1000);
 
 % note: 'lam_center' in 'wg_info' means that the constant 'neff0' is defined based on this
 % wavelength
 wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
-[lams, neffs, betas] = fun_get_disp_cur (sim_lam_info, wg_info);
+[lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 lams_nm = lams*1e9;
 % radii of the two MRRs; 
 radius1 = 10e-6;
@@ -38,8 +38,9 @@ kap2 = 0.2;
 for dphi = pi
 
 % calculate the responses of the two MRRs   
-[drs1, thrs1] = fun_MRR_AD(kap1, kap1, radius1, lams, betas,alpha);
-[drs2, thrs2] = fun_MRR_AD(kap2, kap2, radius2, lams, betas,alpha);
+
+[drs1, thrs1] = admrr (kap1, kap1, radius1, lams, betas,alpha);
+[drs2, thrs2] = admrr (kap2, kap2, radius2, lams, betas,alpha);
 
 
 %% for Output 1 (upper output in Fig. 5.4)
@@ -62,7 +63,7 @@ title('Amplitude modulation profile due to the phase difference between Lights 1
 % The out light is essentially the superposition of lights 1 and 2.
 out1 = (light1 + light2); 
 am_out1 = 10 * log10 (abs(out1).^2); % amplitude response
-figure,plot(lams_nm, am_out1), title(['Output 1 response: dphi = ' num2str(dphi/pi) ' pi']);
+figure(7),plot(lams_nm, am_out1), title(['Output 1 response: dphi = ' num2str(dphi/pi) ' pi']),hold on,
 
 
 %% for Output 2 (lower output in Fig. 5.4)
