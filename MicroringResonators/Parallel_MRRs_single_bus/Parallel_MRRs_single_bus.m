@@ -9,7 +9,7 @@ clc;
 % define kappas (a vector) of various MRRs, from left to right; by defining
 % this vector, you also have defined the number of the MRRs.
 % kappas = ones(1,3)*0.2;
-kappas = [0.15 0.2 0.15];
+kappas = [0.32 0.32];
 
 
 % acquire the number of the MRRs from the length of the defined kappas
@@ -17,17 +17,17 @@ nrings = length(kappas);
 
 % radii of the MRRs, from left to right; for parallel MRRs, the MRRs generally have the same length
 % radii = ones(1,nrings) * 7e-6;
-radii = [9 7 9] * 1e-6;
+radii = [10.4 10.4] * 1e-6;
 
 % Define the waveguide loss
-loss_per_cm_dB = 5; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
+loss_per_cm_dB = 10; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
 loss_per_cm = 10^(loss_per_cm_dB/10);
 loss_per_cm = sqrt(loss_per_cm);
 alpha = log(loss_per_cm)/0.01;
 % alpha = 0; % lossless;
 
-sim_lam_info = struct('lam_center', 1.5465e-6, 'lam_span', 0.6e-9, ...
-    'nw', 2000);
+sim_lam_info = struct('lam_center', 1.5455e-6, 'lam_span', 40e-9, ...
+    'nw', 5000);
 
 % note: 'lam_center' in 'wg_info' means that 'neff0' is defined based on this
 % wavelength
@@ -37,7 +37,7 @@ wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
 
 
 dis = 10e-6; % distance between adjacent MRRs;
-...unlike parallel MRRs with dual-bus, here dis won't impact the thransmission response of the system.
+...unlike parallel MRRs with dual-bus, here dis WON'T impact the thransmission response of the system.
     
 pls = exp(-(1j*betas+alpha)*dis);
 
@@ -45,8 +45,10 @@ pls = exp(-(1j*betas+alpha)*dis);
 % ti is the transmission coefficient response of the i-th ring (from left to right)
 t_mrrs = cell(1,nrings);
 
+for dw = linspace(0.0,0.0,1)
+pss = [dw -dw];
 for i = 1:nrings
-    t_mrrs{i} = t_mrr_ap(kappas(i), radii(i), betas, alpha);
+    t_mrrs{i} = t_mrr_ap(kappas(i), radii(i), betas, alpha, pss(i));
 end
 
 t = t_mrrs{1};
@@ -58,9 +60,10 @@ ithr = log10(abs(t).^2)*10;
 pthr = phase(t);
 gp = pha2gp(lams,pthr,1.55e-6);
 figure,plot(lams*1e9, ithr),
-title(['Through-port intensity response of the P-MRR']);
+title('Through-port intensity response of the P-MRR');
 figure,plot(lams(2:end)*1e9, gp),
-title(['Through-port group delay response (ps) of the P-MRR']),
+title('Through-port group delay response (ps) of the P-MRR');
+end
 
 
 

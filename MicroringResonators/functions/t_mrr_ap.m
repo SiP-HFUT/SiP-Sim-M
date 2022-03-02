@@ -4,9 +4,11 @@
 % radius = radius of the ring;
 % lams: a scalar listing all the lambdas of the simulation;
 % betas: a scalar listing all the propgation constants; = 2pi*neff/lambda;
-% alpha: propagation loss ( /m )
+% alpha: propagation loss ( /m );
+% ps: phase shift (rad) inside the ring, which emulates a phase shifter put
+% inside the ring and can shift the resonance peak;
 
-function thrs = t_mrr_ap (kap, radius, betas, alpha)
+function thrs = t_mrr_ap (kap, radius, betas, alpha, ps)
 
 tau = sqrt(1-kap^2); 
 
@@ -25,7 +27,7 @@ l = 2*radius*pi;
 % Loop over all the wavelengths, and calculated the DR and THR responses of
 % the MRR
 nw = length(betas);
-pls = exp(-(1j*betas+alpha)*l);
+pls = exp(-(1j*betas+alpha)*l) .* exp(-1j*ps);
 thrs = zeros(1,nw);
 for i = 1:nw
     T = tm_dc2 (kap, 1);

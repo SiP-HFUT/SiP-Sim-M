@@ -64,7 +64,7 @@ This function returns TYPE 2 matrix of a 2*2 directional coupler (DC)
 
 
 
-#### thrs = t_mrr_ap (kappa,radius,betas,alpha)
+#### thrs = t_mrr_ap (kappa,radius,betas,alpha, ps)
 
 This function returns the transmission coefficient, *t*, of an  all-pass microring resonator (mrr),
 
@@ -72,14 +72,20 @@ This function returns the transmission coefficient, *t*, of an  all-pass microri
 
 
 
+ps: phase shift (rad) inside the ring, which emulates a phase shifter (such as a heater) put inside the ring to shift the resonance peak;
+
 #### M = tm_admrr1 (k0, k1, radius, betas, alpha)
 
-This function returns Type 1 transfer matrix of a add-drop microring resonator (admrr),
+This function returns Type 1 **transfer matrix** of an add-drop microring resonator (admrr),
 
 The returned matrix has a size of $ 2 \times 2 \times \text{nw} $, where nw is the number of lambda points.
 
-- k0,k1: kappas of the two directional couplers of the admrr
+- k0, k1: kappas of the lower and upper directional couplers of the admrr; 
 - alpha: loss per length (1/m)
+
+**Note**: the order of k0, k1 is IMPORTANT:  tm_admrr1 (k0, k1, ...) and  tm_admrr1 (k1, k0, ...) means different things (see below); 
+
+
 
 <img src="README_files/tm_admrr1.jpg" style="zoom:20%;" />
 
@@ -87,7 +93,9 @@ The returned matrix has a size of $ 2 \times 2 \times \text{nw} $, where nw is t
 
 #### M = tm_admrr2 (k0,k1,radius, betas,alpha)
 
-This function returns Type 1 transfer matrix of a add-drop microring resonator (admrr)
+This function returns Type 2 **transfer matrix** of an add-drop microring resonator (admrr)
+
+**Note: the relationships between various types of transfer matrices for MRRs can be calculated in *M_Transform.m***
 
 <img src="README_files/tm_admrr2.jpg" style="zoom:19%;" />
 
@@ -97,6 +105,8 @@ This function returns Type 1 transfer matrix of a add-drop microring resonator (
 
 This funtion calculates the drop  and through port transmission coefficient of an admrr;
 admrr: add-drop microring resonator, which has two bus waveguides.
+
+
 
 
 

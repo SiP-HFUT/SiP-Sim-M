@@ -1,5 +1,5 @@
 %%% This funtion calculates Type 1 transfer matrix (illustrated in
-%%% 'tm_admrr1.pdf') of a add-drop miroring resonator;
+%%% 'tm_admrr1.jpg') of an add-drop miroring resonator;
 
 % The returned matrix has a size of 2*2*nw, where nw is the number of
 % lambda points.
