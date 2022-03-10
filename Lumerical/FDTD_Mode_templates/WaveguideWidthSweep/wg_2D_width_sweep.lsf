@@ -21,7 +21,9 @@ if (mode_po == 0) {
 }
 
 # define the waveguide widths to sweep
-widths=[0.8:0.2:1]*1e-6; 
+widths1=[0.3:0.025:0.4]*1e-6; 
+widths2=[0.7:0.025:0.82]*1e-6; 
+widths = [widths1;widths2];
 
 # define the number of the modes to be included in the neff plot
 modes = 5;      
@@ -60,21 +62,24 @@ for(ii=1:n_w)  {
 }
 n_te = j_te-1; n_tm = j_tm-1;
 leg = cell(n_te + n_tm);
-
-if (n_te != 0){
+leg_index = 1;
+if ((n_te != 0) & (mode_po != 1)) {
     for (i=1:n_te){
-        leg{i}='TE'+num2str(i-1);
+        leg{leg_index}='TE'+num2str(i-1);
+        leg_index = leg_index +1;
     }
     plot (widths*1e+6, neff_te(:,(1:n_te)),'width (um)','neff','neff-versus-width',"plot type=line, marker style=o,  pen=--, linewidth=2, marker size = 10");
     holdon;
 }
 
-if (n_tm != 0){
+if ((n_tm != 0) & (mode_po != 0)){
     for (i=1:n_tm){
-        leg{n_te+i}='TM'+num2str(i-1);
+        leg{leg_index}='TM'+num2str(i-1);
+        leg_index = leg_index +1;
     }
     plot (widths*1e+6, neff_tm(:,(1:n_tm)),'width (um)','neff','neff-versus-width',"plot type=line, marker style=o, pen=-., linewidth=2, marker size = 10");
 }
+leg = leg{1:leg_index-1};
 legend(leg);
 holdoff;
 
