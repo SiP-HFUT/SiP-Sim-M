@@ -26,4 +26,7 @@
 # Visio autosave temporary files
 *.~vsdx
 
+# Interconnect autosave temporary files
+*.ich
+
 debug?.m
