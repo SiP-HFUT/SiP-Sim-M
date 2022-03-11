@@ -52,18 +52,19 @@ sim_lam_info = struct('lam_center', 1.5546e-6, 'lam_span', 5e-9, ...
 
 % note: 'lam_center' in 'wg_info' means that 'neff0' is defined based on this
 % wavelength
-wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
+
+% waveguide loss 
+loss_per_cm_dB = 5; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
+alpha = alpha_cal1(loss_per_cm_dB);
+% alpha = 0; % lossless;
+
+wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha);
 
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 
-%% waveguide loss 
-loss_per_cm_dB = 10; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
-loss_per_cm = 10^(loss_per_cm_dB/10);
-loss_per_cm = sqrt(loss_per_cm);
-alpha = log(loss_per_cm)/0.01; 
-alpha = 0; % lossless;
 
-[thrs, drs] = cas_mrr (g, k1, k2, radius, betas, alpha);
+
+[thrs, drs] = cas_mrr (g, k1, k2, radius, betas);
 
 DRs = 10*log10(abs(drs).^2);
 Thrs = 10*log10(abs(thrs).^2);

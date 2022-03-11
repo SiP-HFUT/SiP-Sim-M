@@ -20,10 +20,8 @@ nrings = length(kappas);
 radii = [10.4 10.4] * 1e-6;
 
 % Define the waveguide loss
-loss_per_cm_dB = 10; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
-loss_per_cm = 10^(loss_per_cm_dB/10);
-loss_per_cm = sqrt(loss_per_cm);
-alpha = log(loss_per_cm)/0.01;
+loss_per_cm_dB = 5; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
+alpha = alpha_cal1(loss_per_cm_dB);
 % alpha = 0; % lossless;
 
 sim_lam_info = struct('lam_center', 1.5455e-6, 'lam_span', 40e-9, ...
@@ -31,7 +29,7 @@ sim_lam_info = struct('lam_center', 1.5455e-6, 'lam_span', 40e-9, ...
 
 % note: 'lam_center' in 'wg_info' means that 'neff0' is defined based on this
 % wavelength
-wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
+wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha);
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 
 
@@ -39,16 +37,16 @@ wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
 dis = 10e-6; % distance between adjacent MRRs;
 ...unlike parallel MRRs with dual-bus, here dis WON'T impact the thransmission response of the system.
     
-pls = exp(-(1j*betas+alpha)*dis);
+pls = exp(-1j*betas*dis);
 
 % Define a cell, t_mrrs, that will stores the transmission coefficient responses of all the MRRs
 % ti is the transmission coefficient response of the i-th ring (from left to right)
 t_mrrs = cell(1,nrings);
 
-for dw = linspace(0.0,0.0,1)
+for dw = linspace(0.0,1,5) % dw: wavelength shift
 pss = [dw -dw];
 for i = 1:nrings
-    t_mrrs{i} = t_mrr_ap(kappas(i), radii(i), betas, alpha, pss(i));
+    t_mrrs{i} = t_mrr_ap(kappas(i), radii(i), betas, pss(i));
 end
 
 t = t_mrrs{1};

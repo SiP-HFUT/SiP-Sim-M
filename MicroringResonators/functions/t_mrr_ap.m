@@ -8,7 +8,7 @@
 % ps: phase shift (rad) inside the ring, which emulates a phase shifter put
 % inside the ring and can shift the resonance peak;
 
-function thrs = t_mrr_ap (kap, radius, betas, alpha, ps)
+function thrs = t_mrr_ap (kap, radius, betas, ps)
 
 tau = sqrt(1-kap^2); 
 
@@ -27,7 +27,7 @@ l = 2*radius*pi;
 % Loop over all the wavelengths, and calculated the DR and THR responses of
 % the MRR
 nw = length(betas);
-pls = exp(-(1j*betas+alpha)*l) .* exp(-1j*ps);
+pls = exp(-1j*betas*l) .* exp(-1j*ps);
 thrs = zeros(1,nw);
 for i = 1:nw
     T = tm_dc2 (kap, 1);

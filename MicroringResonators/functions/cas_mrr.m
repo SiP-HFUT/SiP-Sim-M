@@ -22,7 +22,7 @@
 %   1. g = 2 , k1=0.405, k2=0.2
 %   2. g = 3 , k1 = 0.405, k2 = 0.07
 
-function [thrs, drs] = cas_mrr (g, k1, k2, radius, betas, alpha)
+function [thrs, drs] = cas_mrr (g, k1, k2, radius, betas)
 
 l = 2*pi*radius;
 
@@ -55,7 +55,7 @@ end
 
 %% loop-over all the wavelength points for calculating the responses
 drs = zeros(1,nw); thrs = drs;
-pls = exp(-1j*betas*l/2)*exp(-alpha*l/2);
+pls = exp(-1j*betas*l/2);
 T1 = tm_dc2(k1,1);
 T3 = tm_dc2(k2,1);
 

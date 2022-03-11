@@ -1,7 +1,7 @@
 % This funtion calculates the drop  and through port transmission coefficient of an admrr;
-% admrr: add-drop microring resonato, whic has two bus waveguide.
+% admrr: add-drop microring resonator, whic has two bus waveguides.
 
-function [thrs, drs] = admrr (k0, k1, radius, betas, alpha)
+function [thrs, drs] = admrr (k0, k1, radius, betas)
 syms a0 b0 a3 
 M =  sym('M', [2,2]);
 x3 = [0;a3];
@@ -18,7 +18,7 @@ l = 2*radius*pi;
 % Loop over all the wavelengths, and calculated the DR and THR responses of
 % the MRR
 nw = length(betas);
-pls = exp(-(1j*betas+alpha)*l/2);
+pls = exp(-1j*betas*l/2);
 drs = zeros(1,nw); thrs = drs;
 M = zeros(2,2,nw);
 for i = 1:nw 

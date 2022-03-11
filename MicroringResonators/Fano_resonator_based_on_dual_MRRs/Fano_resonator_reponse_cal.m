@@ -12,9 +12,7 @@ clc
 
 % Define the waveguide loss
 loss_per_cm_dB = 5; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
-loss_per_cm = 10^(loss_per_cm_dB/10);
-loss_per_cm = sqrt(loss_per_cm);
-alpha = log(loss_per_cm)/0.01; 
+alpha = alpha_cal1(loss_per_cm_dB);
 % alpha = 0; % lossless;
 
 sim_lam_info = struct('lam_center', 1.554544e-6, 'lam_span', 3e-9, ...
@@ -22,7 +20,7 @@ sim_lam_info = struct('lam_center', 1.554544e-6, 'lam_span', 3e-9, ...
 
 % note: 'lam_center' in 'wg_info' means that the constant 'neff0' is defined based on this
 % wavelength
-wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
+wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha);
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 lams_nm = lams*1e9;
 % radii of the two MRRs; 
@@ -39,8 +37,8 @@ for dphi = pi
 
 % calculate the responses of the two MRRs   
 
-[drs1, thrs1] = admrr (kap1, kap1, radius1, lams, betas,alpha);
-[drs2, thrs2] = admrr (kap2, kap2, radius2, lams, betas,alpha);
+[drs1, thrs1] = admrr (kap1, kap1, radius1, betas);
+[drs2, thrs2] = admrr (kap2, kap2, radius2, betas);
 
 
 %% for Output 1 (upper output in Fig. 5.4)

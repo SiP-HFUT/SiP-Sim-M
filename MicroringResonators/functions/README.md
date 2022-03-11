@@ -24,9 +24,17 @@ NOTE: To be able to use these functions in your MATLAB, **the folder including t
 
 #### [lams, neffs, betas] = fun_get_disp_cur (lam_info, wg_info)
 
-This function returns  neff-vs-lambdas and the corresponding betas-vs-lambdas (i.e., dispersion curve) from the lambda info and waveguide info.
+This function returns  neff-vs-lambdas and the corresponding betas-vs-lambdas (i.e., dispersion curve) from the *lambda info* and *waveguide info*.
 
-Example usage:
+- *lam_info*: a struct containing simulation wavelength information, and has various fields below:
+  - *lam_center*: simulation wavelength center
+  - *lam_span*:   simulation wavelength span
+  - *nw*: total number of the simulation wavelength points
+- *waveguide info*: a struct containing waveguide information, and has various fields below:
+  - *neff*, *ng*, and *lam_center*: waveguide effective refractive index and group index at the wavelength = *lam_center*
+  - alpha: waveguide power propagation loss (1/m)
+
+**Example usage:**
 
 ```matlab
 ...
@@ -35,13 +43,13 @@ sim_lam_info = struct('lam_center', 1.5592e-6, 'lam_span', 25e-9, ...
     'nw', 3000);
 
 % waveguide effective refractive index and group index of the waveguide at wavelength = 1.55 um
-wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
+wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2,  'alpha', alpha);
 
 % acquire neff-vs-lambdas and the corresponding betas-vs-lambdas (i.e., dispersion curve) 
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 
 % calculate the transfer matrix (Type 1) of an add-drop microring resonator (admrr)
-M = tm_admrr1 (k0, k1, radius, lams, betas, alpha);
+M = tm_admrr1 (k0, k1, radius, betas);
 ...
 ```
 
@@ -64,7 +72,7 @@ This function returns TYPE 2 matrix of a 2*2 directional coupler (DC)
 
 
 
-#### thrs = t_mrr_ap (kappa,radius,betas,alpha, ps)
+#### thrs = t_mrr_ap (kappa,radius,betas,ps)
 
 This function returns the transmission coefficient, *t*, of an  all-pass microring resonator (mrr),
 

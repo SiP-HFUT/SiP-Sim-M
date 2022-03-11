@@ -8,8 +8,17 @@ close all; % close all the figures plotted before
 %% Define the parameters of the ring
 radius = 10e-6; % radius of the ring
 l = 2*radius*pi;
-k0 = 0.1;
-k1 = 0.1;
+
+% Define the waveguide loss
+% a = 0.96; % a: transmission coefficient per round trip of the ring
+% alpha = alpha_cal2 (0.96, l); 
+
+% or define loss per cm in dB, typically 5 dB for 200*500 nm SOI waveguide
+loss_db_per_cm = 5;
+alpha = alpha_cal1 (loss_db_per_cm); 
+
+t0 = 0.97; t1 = 0.9735; k0 = sqrt(1-t0^2); k1 = sqrt(1-t1^2); 
+% k0 = 0.1; k1 = 0.1;
 
 %% for solving the analytic expression of drop- and through-port responses of the system
 syms a0 b0 a3
@@ -24,23 +33,17 @@ dr_char = char(dr);
 thr_char = char(thr);
 
 
+
 %% Define the simulation wavelength range and the dispersion charateristic of the waveguide, calculated from Lumerical Mode
 sim_lam_info = struct('lam_center', 1.55e-6, 'lam_span', 30e-9, ...
-    'nw', 3000);
+    'nw', 6000);
 
 % note: 'lam_center' in 'wg_info' means that 'neff0' is defined based on this
 % wavelength
-wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2);
+wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha);
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 
-%% Define the waveguide loss
-loss_per_cm_dB = 5; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
-loss_per_cm = 10^(loss_per_cm_dB/10);
-loss_per_cm = sqrt(loss_per_cm);
-alpha = log(loss_per_cm)/0.01;
-% alpha = 0; % lossless;
-
-M = tm_admrr1 (k0, k1, radius, betas, alpha);
+M = tm_admrr1 (k0, k1, radius, betas);
 drs = zeros(1,sim_lam_info.nw); thrs = drs;
 for i = 1 : sim_lam_info.nw
     [drs(i),thrs(i)] = resolve(M(:,:,i), dr_char, thr_char);
@@ -51,6 +54,8 @@ THR = log10(abs(thrs).^2)*10;
 figure,plot(lams*1e9, DR),title('Drop-port response of the MRR');
 figure,plot(lams*1e9, THR),title('Through-port response of the MRR');
 
+pthrs = phase(thrs);
+figure,plot(lams*1e9, pthrs/pi),title('Through-port phase response (pi)');
 % for validation purpose
 p_total = abs(drs).^2 + abs(thrs).^2;
 figure,plot(lams*1e9, p_total),title('Total energy');
