@@ -56,6 +56,7 @@ figure,plot(lams*1e9, THR),title('Through-port response of the MRR');
 
 pthrs = phase(thrs);
 figure,plot(lams*1e9, pthrs/pi),title('Through-port phase response (pi)');
+
 % for validation purpose
 p_total = abs(drs).^2 + abs(thrs).^2;
 figure,plot(lams*1e9, p_total),title('Total energy');

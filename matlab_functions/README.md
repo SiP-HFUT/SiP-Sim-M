@@ -16,6 +16,20 @@
 
 - cas_mrr
 
+- alpha_cal1
+
+- alpha_cal2
+
+- loss_per_cm_dB_cal
+
+-  lam2det
+
+- tmmcalc
+
+- phase
+
+- pha2gp
+
   
 
 NOTE: To be able to use these functions in your MATLAB, **the folder including the functions need to be included in the MATLAB searching paths.** Using `pathtool` command in MATLAB can easily achieve this.
@@ -82,7 +96,7 @@ This function returns the transmission coefficient, *t*, of an  all-pass microri
 
 ps: phase shift (rad) inside the ring, which emulates a phase shifter (such as a heater) put inside the ring to shift the resonance peak;
 
-#### M = tm_admrr1 (k0, k1, radius, betas, alpha)
+#### M = tm_admrr1 (k0, k1, radius, betas)
 
 This function returns Type 1 **transfer matrix** of an add-drop microring resonator (admrr),
 
@@ -99,7 +113,7 @@ The returned matrix has a size of $ 2 \times 2 \times \text{nw} $, where nw is t
 
 
 
-#### M = tm_admrr2 (k0,k1,radius, betas,alpha)
+#### M = tm_admrr2 (k0,k1,radius, betas)
 
 This function returns Type 2 **transfer matrix** of an add-drop microring resonator (admrr)
 
@@ -109,14 +123,10 @@ This function returns Type 2 **transfer matrix** of an add-drop microring resona
 
 
 
-#### [thrs, drs] = admrr (k0, k1, radius, betas, alpha)
+#### [thrs, drs] = admrr (k0, k1, radius, betas)
 
 This funtion calculates the drop  and through port transmission coefficient of an admrr;
 admrr: add-drop microring resonator, which has two bus waveguides.
-
-
-
-
 
 #### [thrs, drs] = cas_mrr (g, k1, k2, radius, betas, alpha)
 
@@ -137,13 +147,53 @@ Here it is assumed that:
 2. the kappas (k1) between the straight bus waveguide and the ring are the same.
 3. kappas (k2)  between all the adjacent MRRs are the same.
 
+#### alpha = alpha_cal1 (loss_per_cm_dB)
 
+Calculate light amplitude propagation loss (1/m), alpha,  from the loss per cm in dB
 
+#### alpha = alpha_cal2 (scale, length)
 
+Calculate waveguide power propagation loss (1/m), *alpha*,  from the light transmission coefficient for  a waveguide  length of *length*. 
 
+Example usage:
 
+if the amplitude of the light becomes 0.5 smaller compared with the original amplitude after propagating a 1 cm waveguide, the corresponding alpha can be easily calculated by using this function:
 
+`alpha = alpha_cal2 (0.5, 1e-2);`
 
+#### loss_per_cm_dB = loss_per_cm_dB_cal(alpha)
+
+Calculate loss_per_cm_dB from alpha
+
+#### [detuning] = lam2det (ng, lam_center, lambdas)
+
+Translate wavelengths into wavelength detunings
+
+- lambdas: a 1*n scalar including all the discrete wavelengths
+- ng: group index
+- lam_center: wavelength center of the lambdas
+
+#### [r,t] = tmmcalc (q, dz, detuning)
+
+Calculate the reflection and transmission responses of a Bragg grating
+
+- q: a scalar, which is a discrete version of the grating strength and phase distribution along the grating length
+- dz:  the physical distance between adjacent points of q 
+- detuning:  wavelength detuning, which can be easily translated from wavelengths using function *lam2det ()*
+
+#### [y] = phase (x) 
+
+Calculate the phase profile of x
+
+#### [gp] = pha2gp (w, pha, lam_center)
+
+Convert a phase response to a group delay (GP) response, based on the fact that GP response is the first derivative of the phase response
+
+Input Parameters: 
+
+- w: lambdas (m);
+- pha: phase response (rad)
+- lam_center: center_wavelength (m)
 
 
 

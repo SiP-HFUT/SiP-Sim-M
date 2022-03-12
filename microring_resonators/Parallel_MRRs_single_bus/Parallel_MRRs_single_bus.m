@@ -35,7 +35,7 @@ wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha
 
 
 dis = 10e-6; % distance between adjacent MRRs;
-...unlike parallel MRRs with dual-bus, here dis WON'T impact the thransmission response of the system.
+...unlike parallel MRRs with dual-bus, here 'dis' does NOT impact the thransmission response of the system.
     
 pls = exp(-1j*betas*dis);
 
@@ -59,7 +59,7 @@ pthr = phase(t);
 gp = pha2gp(lams,pthr,1.55e-6);
 figure,plot(lams*1e9, ithr),
 title('Through-port intensity response of the P-MRR');
-figure,plot(lams(2:end)*1e9, gp),
+figure,plot(lams*1e9, gp),
 title('Through-port group delay response (ps) of the P-MRR');
 end
 
