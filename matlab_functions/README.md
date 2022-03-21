@@ -6,6 +6,8 @@
 
 - tm_dc2
 
+- tm_dc3
+
 - t_mrr_ap
 
 - tm_admrr1
@@ -85,6 +87,12 @@ This function returns TYPE 2 matrix of a 2*2 directional coupler (DC)
 <img src="README_files/tm_dc2.jpg" style="zoom: 45%;" />
 
 
+
+#### tm_dc = tm_dc3  (kappa, t_c)
+
+This function returns TYPE 3 matrix of a **4*4** directional coupler (DC), as shown below.
+
+<img src="README_files/tm_dc3.jpg" alt="tm_dc3"  />
 
 #### thrs = t_mrr_ap (kappa,radius,betas,ps)
 
