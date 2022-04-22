@@ -14,10 +14,13 @@ end
 if w(1)<1
     w = w*1e+9;
 end
+if length(pha(:,1))>1
+    pha = pha';
+end
 ws = abs(w(2)-w(1));
 delta_f = 3e+8/(lam_center)-3e+8/(lam_center+1e-9);
 delta_w=ws*delta_f*2*pi/1e+12;
 gp = diff(unwrap(pha))/delta_w;
 gp = [gp(1) gp];
-%figure,plot(w(2:end),gp),title('Group delay response (ps)'),hold on;
+figure,plot(w,gp),title('Group delay response (ps)'),hold on;
 end
