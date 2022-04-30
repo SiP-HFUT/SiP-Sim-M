@@ -5,4 +5,4 @@ Provide useful simulation files and codes for simulating fundamental devices of 
 To develop a library of simulations codes for studying some fundamental buidling blocks in SiP chips.
 
 # Simulation Tools
-Matlab and Lumerical
+Matlab

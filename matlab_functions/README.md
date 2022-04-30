@@ -90,7 +90,7 @@ This function returns TYPE 2 matrix of a 2*2 directional coupler (DC)
 
 #### tm_dc = tm_dc3  (kappa, t_c)
 
-This function returns TYPE 3 matrix of a **4*4** directional coupler (DC), as shown below.
+This function returns TYPE 3 matrix of a **4*4** directional coupler (DC), as shown below. An example usage of this function can be found in *"E:\SiP-Simulations\Grating_in_circuits\MZI_IBG1\MZI_IBG1_v1"*
 
 <img src="README_files/tm_dc3.jpg" alt="tm_dc3"  />
 
@@ -138,7 +138,7 @@ admrr: add-drop microring resonator, which has two bus waveguides.
 
 #### [thrs, drs] = cas_mrr (g, k1, k2, radius, betas, alpha)
 
-This function returns through- and drop-port transmission coefficients of cascaded micro-ring resonators, with typical structures shown below:
+This function returns through- and drop-port transmission coefficients of cascaded micro-ring resonators, with typical structures shown below. An example usage of this function can be seen in *"SiP-Simulations\microring_resonators\CascadedMRRs\MRR_cascaded_cal.m"*.
 
 <img src="README_files/cascaded_mrrs.jpg" style="zoom: 12%;" />
 
