@@ -32,6 +32,8 @@
 
 - pha2gp
 
+- kappa_cal1
+
   
 
 NOTE: To be able to use these functions in your MATLAB, **the folder including the functions need to be included in the MATLAB searching paths.** Using `pathtool` command in MATLAB can easily achieve this.
@@ -203,7 +205,19 @@ Input Parameters:
 - pha: phase response (rad)
 - lam_center: center_wavelength (m)
 
+#### kappa = kappa_cal1 (R,L)
 
+This function calculates kappa of a Bragg grating from its maximum reflectivity (0 - 1) and the length (unit: m);
+
+The general concept is that we first calculate kappa from a very short Bragg grating (as its simulation time is short). Then, the calculated kappa is used in CMT-TMM for estimating spectrum features of a same Bragg grating except having a much longer length.  
+
+Example usage: for calculating kappa of a Bragg grating with a length of 300e-6 m and a maximum reflectivity of 0.1, we can use:  
+`kappa = kappa_cal1 (0.1, 300e-6);` which will give the kappa of about 1.09e3 m^(-1)
+
+Input Parameters: 
+
+- R: maximum reflectivity of the grating, from 0 to 1
+- L: length of the grating; unit: m;
 
 
 
