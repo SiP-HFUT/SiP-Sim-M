@@ -7,8 +7,10 @@
 % admrr: add-drop microring resonator, which has two bus waveguides.
 % k0,k1: kappas of the two directional couplers of the admrr
 % alpha: loss per length (1/m)
+% ps: phase shift (rad) inside the ring, which emulates a phase shifter put
+% inside the ring and can shift the resonance peak;
 
-function M = tm_admrr1 (k0, k1, radius, betas)
+function M = tm_admrr1 (k0, k1, radius, betas, ps)
 
 t0 = sqrt(1-k0^2); % upper DC
 t1 = sqrt(1-k1^2); % lower DC
@@ -18,7 +20,7 @@ l = 2*radius*pi;
 % Loop over all the wavelengths, and calculated the DR and THR responses of
 % the MRR
 nw = length(betas);
-pls = exp(-1j*betas*l/2);
+pls = exp(-1j*betas*l/2) .* exp(-1j*ps/2);
 drs = zeros(1,nw); thrs = drs;
 M = zeros(2,2,nw);
 for i = 1:nw 

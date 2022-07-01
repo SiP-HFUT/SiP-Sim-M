@@ -19,9 +19,13 @@ nrings = length(kappas);
 radii = ones(1,nrings) * 9e-6;
 % radii = [9 9 9] * 1e-6;
 
+% define phase shift for each MRR;
+phase_shifts = zeros(1,nrings); % default
+% phase_shifts = [0 0];  % manually set, and its length should be the same as nrings
+
 % Define the waveguide loss
 loss_per_cm_dB = 0; % typical silicon 220*500 nm waveguide loss£º5 dB/cm;
-alpha = alpha_from_loss_per_cm_dB (loss_per_cm_dB);
+alpha = alpha_cal1 (loss_per_cm_dB)
 % alpha = 0; % lossless;
 
 
@@ -59,7 +63,7 @@ for dis =[dis1]
     for i = 1:nrings
         % below we will assume that the upper and lower DCs for each MRR have the
         % same kappas
-        Ms{i} = tm_admrr2(kappas(i), kappas(i), radii(i), betas);
+        Ms{i} = tm_admrr2(kappas(i), kappas(i), radii(i), betas, phase_shifts(i));
     end
     
     % Loop over all the wavelengths

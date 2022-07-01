@@ -43,7 +43,9 @@ sim_lam_info = struct('lam_center', 1.55e-6, 'lam_span', 30e-9, ...
 wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha);
 [lams, neffs, betas] = get_disp_cur (sim_lam_info, wg_info);
 
-M = tm_admrr1 (k0, k1, radius, betas);
+% set a phase shift inside the ring to shift the resonance wavelength if neccesary
+phase_shift = 0; 
+M = tm_admrr1 (k0, k1, radius, betas, phase_shift);
 drs = zeros(1,sim_lam_info.nw); thrs = drs;
 for i = 1 : sim_lam_info.nw
     [drs(i),thrs(i)] = resolve(M(:,:,i), dr_char, thr_char);
@@ -51,8 +53,8 @@ end
 
 DR = log10(abs(drs).^2)*10;
 THR = log10(abs(thrs).^2)*10;
-figure,plot(lams*1e9, DR),title('Drop-port response of the MRR');
-figure,plot(lams*1e9, THR),title('Through-port response of the MRR');
+figure(1),plot(lams*1e9, DR),title('Drop-port response of the MRR');hold on;
+figure(2),plot(lams*1e9, THR),title('Through-port response of the MRR');hold on;
 
 pthrs = phase(thrs);
 figure,plot(lams*1e9, pthrs/pi),title('Through-port phase response (pi)');

@@ -106,7 +106,7 @@ This function returns the transmission coefficient, *t*, of an  all-pass microri
 
 ps: phase shift (rad) inside the ring, which emulates a phase shifter (such as a heater) put inside the ring to shift the resonance peak;
 
-#### M = tm_admrr1 (k0, k1, radius, betas)
+#### M = tm_admrr1 (k0, k1, radius, betas, ps)
 
 This function returns Type 1 **transfer matrix** of an add-drop microring resonator (admrr),
 
@@ -114,16 +114,15 @@ The returned matrix has a size of $ 2 \times 2 \times \text{nw} $, where nw is t
 
 - k0, k1: kappas of the lower and upper directional couplers of the admrr; 
 - alpha: loss per length (1/m)
+- ps: phase shift (rad) inside the ring, which emulates a phase shifter put inside the ring and can shift the resonance peak;
 
-**Note**: the order of k0, k1 is IMPORTANT:  tm_admrr1 (k0, k1, ...) and  tm_admrr1 (k1, k0, ...) means different things (see below); 
-
-
+**Note**: the order of k0, k1 is IMPORTANT:  tm_admrr1 (k0, k1, ...) and  tm_admrr1 (k1, k0, ...) means different things, as shown below:  
 
 <img src="README_files/tm_admrr1.jpg" style="zoom:20%;" />
 
 
 
-#### M = tm_admrr2 (k0,k1,radius, betas)
+#### M = tm_admrr2 (k0,k1,radius, betas, ps)
 
 This function returns Type 2 **transfer matrix** of an add-drop microring resonator (admrr)
 
