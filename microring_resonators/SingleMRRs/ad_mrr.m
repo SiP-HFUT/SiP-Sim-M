@@ -14,11 +14,11 @@ l = 2*radius*pi;
 % alpha = alpha_cal2 (0.96, l); 
 
 % or define loss per cm in dB, typically 5 dB for 200*500 nm SOI waveguide
-loss_db_per_cm = 5;
+loss_db_per_cm = 10;
 alpha = alpha_cal1 (loss_db_per_cm); 
 
-t0 = 0.97; t1 = 0.9735; k0 = sqrt(1-t0^2); k1 = sqrt(1-t1^2); 
-% k0 = 0.1; k1 = 0.1;
+% t0 = 0.97; t1 = 0.9735; k0 = sqrt(1-t0^2); k1 = sqrt(1-t1^2); 
+k0 = 0.130106686991868; k1 = 0.099874921777191;
 
 %% for solving the analytic expression of drop- and through-port responses of the system
 syms a0 b0 a3

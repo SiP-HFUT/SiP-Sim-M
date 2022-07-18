@@ -22,10 +22,10 @@ pls = exp(-1j*betas*l/2);
 drs = zeros(1,nw); thrs = drs;
 M = zeros(2,2,nw);
 for i = 1:nw 
-    T23 = tm_dc2 (k0,1);
+    T23 = tm_dc2 (k1,1);
     pl = pls(i);
     T12 = [0 pl; pl^-1 0];
-    T10 = tm_dc2 (k1,1);
+    T10 = tm_dc2 (k0,1);
     M(:,:,i) = T10*T12*T23;
     [drs(i),thrs(i)] = resolve(M(:,:,i),dr_char,thr_char);
 end

@@ -137,6 +137,8 @@ This function returns Type 2 **transfer matrix** of an add-drop microring resona
 This funtion calculates the drop  and through port transmission coefficient of an admrr;
 admrr: add-drop microring resonator, which has two bus waveguides.
 
+<img src="README_files/admrr.jpg" alt="admrr" style="zoom: 10%;" />
+
 #### [thrs, drs] = cas_mrr (g, k1, k2, radius, betas, alpha)
 
 This function returns through- and drop-port transmission coefficients of cascaded micro-ring resonators, with typical structures shown below. An example usage of this function can be seen in *"SiP-Simulations\microring_resonators\CascadedMRRs\MRR_cascaded_cal.m"*.
@@ -217,48 +219,6 @@ Input Parameters:
 
 - R: maximum reflectivity of the grating, from 0 to 1
 - L: length of the grating; unit: m;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
