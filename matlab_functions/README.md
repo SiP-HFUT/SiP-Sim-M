@@ -34,6 +34,8 @@
 
 - kappa_cal1
 
+- mrrfsr_cal
+
   
 
 NOTE: To be able to use these functions in your MATLAB, **the folder including the functions need to be included in the MATLAB searching paths.** Using `pathtool` command in MATLAB can easily achieve this.
@@ -220,9 +222,17 @@ Input Parameters:
 - R: maximum reflectivity of the grating, from 0 to 1
 - L: length of the grating; unit: m;
 
+#### fsr = fsrcal (dl, ng, lam0)
 
+This function calculates FSR of a microring resonator or a MZI , according to the euqation $FSR = \frac{\lambda^2}{Ln_g}$  
 
+variables:
 
+- dl (unit: m): 
+  - for MZIs, it is the length difference between the two arms;
+  - for MRRs, it is the perimeter of the ring, which equals $2\pi r$
+- ng: group index of the waveguide
+- lam0 (unit: m): center wavelength of the interested wavelength band
 
 
 
