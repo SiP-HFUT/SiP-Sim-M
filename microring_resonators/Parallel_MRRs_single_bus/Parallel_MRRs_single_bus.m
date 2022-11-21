@@ -8,9 +8,10 @@ clc;
 
 % define kappas (a vector) of various MRRs, from left to right; by defining
 % this vector, you also have defined the number of the MRRs.
+
 % kappas = ones(1,3)*0.2;
 kappas = [0.32 0.32];
-
+taus = sqrt (1 - kappas.^2);
 
 % acquire the number of the MRRs from the length of the defined kappas
 nrings = length(kappas);
@@ -43,10 +44,9 @@ pls = exp(-1j*betas*dis);
 % ti is the transmission coefficient response of the i-th ring (from left to right)
 t_mrrs = cell(1,nrings);
 
-for dw = linspace(0.0,1,5) % dw: wavelength shift
-pss = [dw -dw];
+
 for i = 1:nrings
-    t_mrrs{i} = t_mrr_ap(kappas(i), radii(i), betas, pss(i));
+    t_mrrs{i} = t_mrr_ap(kappas(i), taus(i), radii(i), betas, 0);
 end
 
 t = t_mrrs{1};
@@ -59,9 +59,8 @@ pthr = phase(t);
 gp = pha2gp(lams,pthr,1.55e-6);
 figure,plot(lams*1e9, ithr),
 title('Through-port intensity response of the P-MRR');
-figure,plot(lams*1e9, gp),
-title('Through-port group delay response (ps) of the P-MRR');
-end
+
+
 
 
 

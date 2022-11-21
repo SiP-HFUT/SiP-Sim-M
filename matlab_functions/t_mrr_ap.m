@@ -1,6 +1,6 @@
 %%% This function returns the transmission coefficient versus lambda, t(lambdas), of an all-pass MRR (i.e., MRR with a single bus waveguide),
 
-% kap: kappa of the directional coupler;
+% kap, tau: kappa and tau of the directional coupler;
 % radius = radius of the ring;
 % lams: a scalar listing all the lambdas of the simulation;
 % betas: a scalar listing all the propgation constants; = 2pi*neff/lambda;
@@ -8,9 +8,8 @@
 % ps: phase shift (rad) inside the ring, which emulates a phase shifter put
 % inside the ring and can shift the resonance peak;
 
-function thrs = t_mrr_ap (kap, radius, betas, ps)
-
-tau = sqrt(1-kap^2); 
+function thrs = t_mrr_ap (kap, tau, radius, betas, ps)
+ 
 
 syms a0 b0 a1 b1 pml
 M =  sym('M', [2,2]);
@@ -30,7 +29,7 @@ nw = length(betas);
 pls = exp(-1j*betas*l) .* exp(-1j*ps);
 thrs = zeros(1,nw);
 for i = 1:nw
-    T = tm_dc2 (kap, 1);
+    T = tm_dc2 (kap, tau);
     M = T;
     thrs(i) = resolve(M, pls(i)^-1, thr_char);
 end

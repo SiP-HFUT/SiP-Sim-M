@@ -10,15 +10,18 @@ radius = 10e-6; % radius of the ring
 l = 2*radius*pi;
 
 % Define the waveguide loss
-% a = 0.96; % a: transmission coefficient per round trip of the ring
-% alpha = alpha_cal2 (0.96, l); 
+a = 0.996482412060302; % a: transmission coefficient per round trip of the ring
+alpha = alpha_cal2 (a, l); 
 
 % or define loss per cm in dB, typically 5 dB for 200*500 nm SOI waveguide
-loss_db_per_cm = 10;
-alpha = alpha_cal1 (loss_db_per_cm); 
+% loss_db_per_cm = 10;
+% alpha = alpha_cal1 (loss_db_per_cm); 
 
-% t0 = 0.97; t1 = 0.9735; k0 = sqrt(1-t0^2); k1 = sqrt(1-t1^2); 
+% t0 = 0.97; t1 = 0.9735; 
+% k0 = sqrt(1-t0^2); k1 = sqrt(1-t1^2); 
+
 k0 = 0.130106686991868; k1 = 0.099874921777191;
+t0 = sqrt(1-k0^2); t1 = sqrt(1-k1^2); 
 
 %% for solving the analytic expression of drop- and through-port responses of the system
 syms a0 b0 a3
@@ -35,8 +38,8 @@ thr_char = char(thr);
 
 
 %% Define the simulation wavelength range and the dispersion charateristic of the waveguide, calculated from Lumerical Mode
-sim_lam_info = struct('lam_center', 1.55e-6, 'lam_span', 30e-9, ...
-    'nw', 6000);
+sim_lam_info = struct('lam_center', 1.55e-6, 'lam_span', 20e-9, ...
+    'nw', 12000*2);
 
 % note: 'lam_center' in 'wg_info' means that 'neff0' is defined based on this
 % wavelength
@@ -45,7 +48,7 @@ wg_info = struct('lam_center', 1.55e-6, 'neff0', 2.43, 'ng', 4.2, 'alpha', alpha
 
 % set a phase shift inside the ring to shift the resonance wavelength if neccesary
 phase_shift = 0; 
-M = tm_admrr1 (k0, k1, radius, betas, phase_shift);
+M = tm_admrr1 (k0, t0, k1, t1, radius, betas, phase_shift);
 drs = zeros(1,sim_lam_info.nw); thrs = drs;
 for i = 1 : sim_lam_info.nw
     [drs(i),thrs(i)] = resolve(M(:,:,i), dr_char, thr_char);

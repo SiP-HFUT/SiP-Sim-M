@@ -9,6 +9,7 @@ clc;
 % define kappas (a vector) of various MRRs, from left to right; by defining
 % this vector, the number of the MRRs has also been defined.
 kappas = ones(1,4)*0.1;
+taus = sqrt (1 - kappas.^2);
 % kappas = [0.1 0.1 0.1];
 
 
@@ -63,7 +64,7 @@ for dis =[dis1]
     for i = 1:nrings
         % below we will assume that the upper and lower DCs for each MRR have the
         % same kappas
-        Ms{i} = tm_admrr2(kappas(i), kappas(i), radii(i), betas, phase_shifts(i));
+        Ms{i} = tm_admrr2(kappas(i),taus(i), kappas(i), taus(i), radii(i), betas, phase_shifts(i));
     end
     
     % Loop over all the wavelengths

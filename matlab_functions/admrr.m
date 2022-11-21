@@ -1,7 +1,7 @@
 % This funtion calculates the drop  and through port transmission coefficient of an admrr;
 % admrr: add-drop microring resonator, whic has two bus waveguides.
 
-function [thrs, drs] = admrr (k0, k1, radius, betas)
+function [thrs, drs] = admrr (k0, t0, k1, t1, radius, betas)
 syms a0 b0 a3 
 M =  sym('M', [2,2]);
 x3 = [0;a3];
@@ -22,10 +22,10 @@ pls = exp(-1j*betas*l/2);
 drs = zeros(1,nw); thrs = drs;
 M = zeros(2,2,nw);
 for i = 1:nw 
-    T23 = tm_dc2 (k1,1);
+    T23 = tm_dc2 (k1,t1);
     pl = pls(i);
     T12 = [0 pl; pl^-1 0];
-    T10 = tm_dc2 (k0,1);
+    T10 = tm_dc2 (k0,t0);
     M(:,:,i) = T10*T12*T23;
     [drs(i),thrs(i)] = resolve(M(:,:,i),dr_char,thr_char);
 end

@@ -13,9 +13,9 @@
 % The relationships between various types of transfer matrices for MRRs can
 % be calculated in 'M_Transform.m'
 
-function M = tm_admrr2 (k0, k1, radius, betas, ps)
+function M = tm_admrr2 (k0, t0, k1, t1, radius, betas, ps)
 
-M0 = tm_admrr1 (k0, k1, radius, betas, ps);
+M0 = tm_admrr1 (k0, t0, k1, t1, radius, betas, ps);
 
 % Type 1 to Type 2 Matrix Transformation
 M = [-M0(2,1,:)./M0(2,2,:)   1/M0(2,2,:);

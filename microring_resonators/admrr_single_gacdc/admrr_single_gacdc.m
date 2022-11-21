@@ -71,7 +71,7 @@ for j = 1:nw
     rj = 1j*r(j); tj = t(j);
     T1 = [1/rj -tj/rj; tj/rj (rj^2-tj^2)/rj];
     T2 = [p1(j)^-1 0; 0 p1(j)];
-    T3 = tm_dc2 (kappa, 1);
+    T3 = tm_dc2 (kappa, tau);
     M = T1*T2*T3;
     [dr(j),thr(j)] = Re(M,drop_char,thr_char);
 end

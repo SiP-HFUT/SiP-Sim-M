@@ -28,8 +28,8 @@ radius1 = 10e-6;
 radius2 = radius1;
 
 % kappas of the DC of two MRRs; 
-kap1 = 0.2;
-kap2 = 0.2;
+kap1 = 0.2; tau1 = sqrt (1-kap1^2);
+kap2 = 0.2; tau2 = sqrt (1-kap2^2);
 
 
 %  dphi: the phase difference between the two interfered lights
@@ -37,8 +37,8 @@ for dphi = pi
 
 % calculate the responses of the two MRRs   
 
-[drs1, thrs1] = admrr (kap1, kap1, radius1, betas);
-[drs2, thrs2] = admrr (kap2, kap2, radius2, betas);
+[drs1, thrs1] = admrr (kap1, tau1, kap1, tau1, radius1, betas);
+[drs2, thrs2] = admrr (kap2, tau2, kap2, tau2, radius2, betas);
 
 
 %% for Output 1 (upper output in Fig. 5.4)
