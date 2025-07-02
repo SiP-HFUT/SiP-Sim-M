@@ -10,6 +10,6 @@
 % "kappa = kappa_cal1(0.1,300e-6)"; which will give the kappa of about
 % 1.09e3 m^(-1)
 
-function [kappa]=kappa_cal1(R,L)
+function [kappa]=kappa_cal_r(R,L)
 kappa = atanh(sqrt(R))/L;
 end

@@ -1,3 +1,25 @@
+% This function generates wavelength points and the corresponding effective
+% indices and propagation constants at each wavelengths, from the waveguide
+% and wavelength Info..
+
+% Input Prameters
+% - lam_info: struct with three fields of 'lam_center', 'lam_span' and 'nw',
+%   which mean, respectivelty, center wavelength, wavelength span, and total number of the wavelength points
+
+% - wg_info: struct with three fields of 'neff0', 'ng' and 'alpha',
+%   which mean, respectivelty, effective indexand group index at the
+%   wavelength of 'lam_center', wavelength span, and  light amplitude propagation loss (1/m)
+
+% Output Results
+% - lams (1*n vector): wavelength points
+
+% - neffs (1*n vector): effective indices at each wavelength point
+
+% - betas (1*n vector): propagation constants at each wavelength point
+
+% Note 
+% -All the wavelength units in this function are 'nm'
+
 function [lams, neffs, betas] = get_disp_cur (lam_info, wg_info)
 lam_center1 = lam_info.lam_center;
 lam_span = lam_info.lam_span;
